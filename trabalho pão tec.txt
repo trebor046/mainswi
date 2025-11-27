@@ -1,0 +1,126 @@
+importar Java.utilitário.Exceção de incompatibilidade de entrada;
+importar Java.utilitário.Scanner;
+
+público aula estoque_padaria{
+    público estático vazio principal(Corda[]argumentos) {
+
+        // Variáveis
+        inteiro paes=0,bombasChoco=0,palitosChoco=0,coxinhas=0,café=0,leite=0;
+        inteiro paesV=0,bombasV=0,palitosV=0,coxinhasV=0,caféV=0,leiteV=0;
+        inteiro paesF,bombasF,palitosF,coxinhasF,caféF,leiteF;
+
+        // Se a variável tiver V no fim → vendido
+        // Se tiver F → estoque final
+
+        Corda resposta;
+        booleano aberta,fechado;
+
+        Scanner leitor=novo Scanner(Sistema.em);
+
+        // Loop para garantir entrada correta
+        enquanto(verdadeiro) {
+            Sistema.fora.println("A padaria abrirá hoje? (Sim/Não)");
+            resposta=leitor.próxima linha().aparar();
+
+            se(resposta.igualIgnorarCaixas("sim") ||resposta.igualIgnorarCaixas("se")) {
+                quebrar;
+            }outro{
+                Sistema.fora.println("Erro! Digite 'Sim' ou 'Não'.\n");
+            }
+        }
+
+        aberta=resposta.igualIgnorarCaixas("sim");
+        fechado=resposta.igualIgnorarCaixas("se");
+
+        se(aberta) {
+
+            Sistema.fora.println(
+                    "Informe o estoque inicial dos itens, nesta ordem:\n"+
+                            "Pães, Bombas de chocolate, Palitos de chocolate, Coxinhas, Café e Leite:"
+            );
+
+            // Tratamento para entrada inválida
+            enquanto(verdadeiro) {
+                tentar{
+                    paes=leitor.próximoInt();
+                    bombasChoco=leitor.próximoInt();
+                    palitosChoco=leitor.próximoInt();
+                    coxinhas=leitor.próximoInt();
+                    café=leitor.próximoInt();
+                    leite=leitor.próximoInt();
+                    quebrar;
+                }pegar(Exceção de incompatibilidade de entrada e) {
+                    Sistema.fora.println("Erro! Digite apenas números inteiros.\n");
+                    leitor.próxima linha();
+                    Sistema.fora.println("Tente novamente:");
+                }
+            }
+
+            Sistema.fora.println(
+                    "\nAgora informe quantas unidades foram VENDIDAS, na mesma ordem:"
+            );
+
+            enquanto(verdadeiro) {
+                tentar{
+                    paesV=leitor.próximoInt();
+                    bombasV=leitor.próximoInt();
+                    palitosV=leitor.próximoInt();
+                    coxinhasV=leitor.próximoInt();
+                    caféV=leitor.próximoInt();
+                    leiteV=leitor.próximoInt();
+                    quebrar;
+                }pegar(Exceção de incompatibilidade de entrada e) {
+                    Sistema.fora.println("Erro! Digite apenas números inteiros.\n");
+                    leitor.próxima linha();
+                    Sistema.fora.println("Tente novamente:");
+                }
+            }
+
+            // Verificação se há mais vendas do que estoque
+            enquanto(paes<paesV||bombasChoco<bombasV||palitosChoco<palitosV||
+                    coxinhas<coxinhasV||café<caféV||leite<leiteV) {
+
+                Sistema.fora.println(
+                        "\nErro! Quantidade vendida maior que a quantidade em estoque.\n"+
+                                "Digite novamente as unidades vendidas:"
+                );
+
+                enquanto(verdadeiro) {
+                    tentar{
+                        paesV=leitor.próximoInt();
+                        bombasV=leitor.próximoInt();
+                        palitosV=leitor.próximoInt();
+                        coxinhasV=leitor.próximoInt();
+                        caféV=leitor.próximoInt();
+                        leiteV=leitor.próximoInt();
+                        quebrar;
+                    }pegar(Exceção de incompatibilidade de entrada e) {
+                        Sistema.fora.println("Erro! Digite apenas números inteiros.\n");
+                        leitor.próxima linha();
+                        Sistema.fora.println("Tente novamente:");
+                    }
+                }
+            }
+
+            // Cálculos finais
+            paesF=paes-paesV;
+            bombasF=bombasChoco-bombasV;
+            palitosF=palitosChoco-palitosV;
+            coxinhasF=coxinhas-coxinhasV;
+            caféF=café-caféV;
+            leiteF=leite-leiteV;
+
+            Sistema.fora.printf(
+                    "\nEstoque final do dia:\n"+
+                            "Pães: %d\nBombas de chocolate: %d\nPalitos de chocolate: %d\n"+
+                            "Coxinhas: %d\nCafé: %d\nLeite: %d\n",
+                    paesF,bombasF,palitosF,coxinhasF,caféF,leiteF
+            );
+
+        }outro se(fechado) {
+            Sistema.fora.println("A PãoTech não abrirá hoje.");
+        }
+
+        leitor.fechar();
+    }
+}
